@@ -10,7 +10,6 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 app.use(cors());
-const PORT = process.env.PORT || 5000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -22,9 +21,9 @@ app.use("/api/v1", UserRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to Spotify🎧 User Server🫡.");
 });
-//  Serever Setup and Database Connection
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  // Import database connection
-  connectDB();
-});
+
+// Database connection (moved outside listen for Vercel)
+connectDB();
+
+// Export the app for Vercel
+export default app;
